@@ -69,6 +69,17 @@ function setResults(results) {
   }
 }
 
+function executeScript(file, tab) {
+  setLoading(true);
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    files: [file],
+  }).then((results) => {
+    setLoading(false);
+    setResults(results[0].result);
+  });
+}
+
 setLoading(false);
 
 chrome.tabs.query(
@@ -78,14 +89,9 @@ chrome.tabs.query(
     const url = new URL(tab.url);
 
     if (url.hostname.endsWith('chase.com')) {
-      setLoading(true);
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ['chase.js'],
-      }).then((results) => {
-        setLoading(false);
-        setResults(results[0].result);
-      });
+      executeScript('chase.js', tab);
+    } else if (url.hostname.endsWith('bankofamerica.com')) {
+      executeScript('bofa.js', tab);
     }
   },
 );
