@@ -39,7 +39,11 @@ function setResults(results) {
       headerElement.appendChild(document.createTextNode(header));
       tableHeaders.appendChild(headerElement);
     });
+    const headerElement = document.createElement('th');
+    headerElement.appendChild(document.createTextNode('Delete Row'));
+    tableHeaders.appendChild(headerElement);
     table.appendChild(tableHeaders);
+
     results.rows.forEach((row) => {
       const rowElement = document.createElement('tr');
       results.headers.forEach((header) => {
@@ -47,6 +51,18 @@ function setResults(results) {
         dataElement.appendChild(document.createTextNode(row[header]));
         rowElement.appendChild(dataElement);
       });
+      const dataElement = document.createElement('td');
+      const deleteButton = document.createElement('button');
+      const deleteButtonText = document.createElement('span');
+      deleteButtonText.className = 'material-icons';
+      deleteButtonText.appendChild(document.createTextNode('delete'));
+      deleteButton.appendChild(deleteButtonText);
+      deleteButton.addEventListener('click', () => {
+        rowElement.remove();
+        results.rows = results.rows.filter((originalRow) => row != originalRow);
+      });
+      dataElement.appendChild(deleteButton);
+      rowElement.appendChild(dataElement);
       table.appendChild(rowElement);
     });
     resultsElement.appendChild(table);

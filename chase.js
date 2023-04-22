@@ -22,6 +22,9 @@ function parse() {
         text = column.getElementsByTagName('mds-link')[0]?.attributes?.text?.value;
       } else if (column.dataset.th == 'Date') {
         text = new Date(text).toISOString().substring(0,10);
+      } else if (column.dataset.th == 'Description') {
+        text = text.replace('Pay over time', '');
+        text = text.trim();
       }
       data[column.dataset.th] = text;
     });
