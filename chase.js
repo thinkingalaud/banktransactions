@@ -25,6 +25,8 @@ function parse() {
       } else if (column.dataset.th == 'Description') {
         text = text.replace('Pay over time', '');
         text = text.trim();
+      } else if (column.dataset.th == 'Amount') {
+        text = text.replace(',', '');
       }
       data[column.dataset.th] = text;
     });

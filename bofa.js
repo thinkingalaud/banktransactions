@@ -28,6 +28,13 @@ function parse() {
         } else if (header == 'desc-cell') {
           text = text.replace('View/Edit', '');
           text = text.trim();
+        } else if (header == 'amount-cell') {
+          if (text.startsWith('-')) {
+            text = text.substring(1);
+          } else {
+            text = '-' + text;
+          }
+          text = text.replace(',', '');
         }
         data[header] = text;
       }
