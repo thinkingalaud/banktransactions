@@ -1,3 +1,4 @@
+// status: boolean
 function setLoading(status) {
   const loading = document.getElementById('loading');
   if (loading) {
@@ -9,11 +10,46 @@ function setLoading(status) {
   }
 }
 
+// results: {
+//   headers: [string],
+//   rows: [Row],
+// }
+// each Row should contain keys that match the list of headers
 function setResults(results) {
   const resultsElement = document.getElementById('results');
   if (resultsElement) {
     resultsElement.style.display = 'block';
-    resultsElement.innerHTML = results;
+
+    const button = document.createElement('button');
+    button.appendChild(document.createTextNode('Copy as CSV'));
+    button.addEventListener('click', () => {
+      var csv = '';
+      results.rows.forEach((row) => {
+        csv += results.headers.map((header) => row[header]).join(',');
+        csv += '\n';
+      });
+      navigator.clipboard.writeText(csv);
+    });
+    resultsElement.appendChild(button);
+
+    const table = document.createElement('table');
+    const tableHeaders = document.createElement('tr');
+    results.headers.forEach((header) => {
+      const headerElement = document.createElement('th');
+      headerElement.appendChild(document.createTextNode(header));
+      tableHeaders.appendChild(headerElement);
+    });
+    table.appendChild(tableHeaders);
+    results.rows.forEach((row) => {
+      const rowElement = document.createElement('tr');
+      results.headers.forEach((header) => {
+        const dataElement = document.createElement('td');
+        dataElement.appendChild(document.createTextNode(row[header]));
+        rowElement.appendChild(dataElement);
+      });
+      table.appendChild(rowElement);
+    });
+    resultsElement.appendChild(table);
   }
 }
 
