@@ -10,6 +10,16 @@ function setLoading(status) {
   }
 }
 
+// url: string
+// options: string[]
+function notFound(url, options) {
+  const notFound = document.getElementById('notfound');
+  if (notFound) {
+    notFound.style.display = 'block';
+    notFound.innerHTML = `URL not recognized: ${url}. Must be one of {${options.join(', ')}}`;
+  }
+}
+
 // results: {
 //   headers: [string],
 //   rows: [Row],
@@ -94,6 +104,8 @@ chrome.tabs.query(
       executeScript('bofa.js', tab);
     } else if (url.hostname.endsWith('venmo.com')) {
       executeScript('venmo.js', tab);
+    } else {
+      notFound(url.hostname, ['chase.com', 'bankofamerica.com', 'venmo.com']);
     }
   },
 );
