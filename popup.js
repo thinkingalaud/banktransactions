@@ -92,6 +92,8 @@ chrome.tabs.query(
       executeScript('chase.js', tab);
     } else if (url.hostname.endsWith('bankofamerica.com')) {
       executeScript('bofa.js', tab);
+    } else if (url.hostname.endsWith('venmo.com')) {
+      executeScript('venmo.js', tab);
     }
   },
 );
