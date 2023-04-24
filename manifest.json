@@ -1,6 +1,9 @@
 {
   "name": "Bank Transactions",
   "author": "thinkingalaud@gmail.com",
+  "icons": {
+    "128": "bank.png"
+  },
   "action": {
     "default_popup": "popup.html"
   },
